@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Add Household{% endblock %}
+
+{% block main %}
+
+<div class="formContainer">
+    {% autoescape true %}
+    <h1>Add Household</h1>
+    <form id="addHouseholdForm" action="addHouseHold" method="post">
+        <label for="name">Household name</label>
+        <input required type="text" id="nameField" name="name">
+
+        <label for="emails">Enter the emails of the users you wish to add (comma separated)</label>
+        <input required multiple type="email" id="emailField" name="emails">
+
+        <input type="submit" value="Submit">
+    </form>
+    {% endautoescape %}
+</div>
+
+{% endblock %}

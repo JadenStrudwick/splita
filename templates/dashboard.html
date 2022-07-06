@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block main %}
+<div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="formContainer">
+        <h1>New bills since last login</h1>
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% for household in households %}
+    <div class="household" id=household{{household.id}}>
+        <h1>{{household.name}}</h1>
+
+        {% if current_user.id == owners[households.index(household)] %}
+        <button class="deleteORleaveHouseHoldButton" id="deleteHouseHoldButton{{household.id}}">Delete
+            Household</button>
+        <script>
+            user_id = {{ current_user.id }}
+            household_id = {{ household.id }}
+            deleteHouseHold(user_id, household_id)
+        </script>
+        {% else %}
+        <button class="deleteORleaveHouseHoldButton" id="leaveHouseHoldButton{{household.id}}">Leave Household</button>
+        <script>
+            user_id = {{ current_user.id }}
+            household_id = {{ household.id }}
+            leaveHouseHold(user_id, household_id)
+        </script>
+        {% endif %}
+
+        {% for bill in bills[households.index(household)] %}
+        <div class="bill" id=bill{{bill.id}}>
+            {% if bill.id in paidBillsId %}
+            <div class="paidBill">
+                <h2>{{bill.name}}: {{ "£%.2f"|format(bill.amount / (members[households.index(household)]|length) )}}
+                </h2>
+                <p>{{"£%.2f"|format(bill.amount) }} total</p>
+            </div>
+            {% else %}
+            <div>
+                <h2>{{bill.name}}: {{ "£%.2f"|format(bill.amount / (members[households.index(household)]|length) )}}
+                </h2>
+                <p>{{"£%.2f"|format(bill.amount) }} total</p>
+            </div>
+            {% endif %}
+
+            {% for currentHouseHoldMember in members[households.index(household)]%}
+            <ul>
+                {% if currentHouseHoldMember in
+                allBillPayments[households.index(household)][bills[households.index(household)].index(bill)] %}
+                <li style="text-decoration:line-through" id="{{currentHouseHoldMember.id}}{{bill.id}}">
+                    {{currentHouseHoldMember.name}} has paid</li>
+                {% else %}
+                <li id="{{currentHouseHoldMember.id}}{{bill.id}}">{{currentHouseHoldMember.name}} has not paid</li>
+                {% endif %}
+            </ul>
+            {% endfor %}
+
+            <div>
+                {% if current_user.id == owners[households.index(household)] %}
+                <button class="deleteBillButton" id="deleteBillButton{{bill.id}}">Delete bill</button>
+                <script>
+                    user_id = {{ current_user.id }}
+                    household_id = {{ household.id }}
+                    bill_id = {{ bill.id }}
+                    deleteBill(user_id, household_id, bill_id)
+                </script>
+                {% endif %}
+
+                <button class="payBillButton" id="payBillButton{{bill.id}}">Pay Bill</button>
+                <script>
+                    name = "{{current_user.name}}"
+                    user_id = {{ current_user.id }}
+                    household_id = {{ household.id }}
+                    bill_id = {{ bill.id }}
+                    payBill(name, user_id, household_id, bill_id)
+                </script>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        <div class="formContainer">
+            {% autoescape true %}
+            <h2>Add bill</h2>
+            <form action="addBill/{{user.id}}/{{household.id}}" method="post">
+                <label for="billName">Name of bill item</label>
+                <input required type="text" id="billNameField" name="billName">
+
+                <label for="amount">Amount to split</label>
+                <input required type="number" id="amountField" name="amount">
+
+                <input type="submit" value="Add">
+            </form>
+            {% endautoescape %}
+        </div>
+
+
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

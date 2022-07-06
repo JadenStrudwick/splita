@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block main %}
+<div id="welcomeMessage">
+    <img src="static/full_logo.png" alt="Splita logo">
+    <h1>Welcome to Splita!</h1>
+    <p>Splita is a bill splitting and tracking webapp developed by Jaden Strudwick for CS139</p>
+    <p>To get started, register or login below!</p>
+</div>
+
+<div class="formContainer">
+    {% autoescape true %}
+    <h1>Register</h1>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form action="register" method="post">
+        <label for="name">First name</label>
+        <input required type="text" id="nameField" name="name">
+
+        <label for="email">Email</label>
+        <input required type="email" id="emailField" name="email">
+
+        <label for="password">Password</label>
+        <input minlength="5" required type="password" id="passwordField" name="password">
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input minlength="5" required type="password" id="confirmPasswordField" name="confirmPassword">
+
+        <input type="submit" value="Register">
+    </form>
+    {% endautoescape %}
+
+</div>
+
+{% endblock %}

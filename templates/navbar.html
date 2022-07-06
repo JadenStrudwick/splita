@@ -1,0 +1,15 @@
+<div id="navbar">
+
+    <img src="static/logo.png" alt="Splita">
+
+    {% if current_user.is_authenticated %}
+    <a href="/dashboard">Dashboard</a>
+    <a href="/addHouseHold">Add house</a>
+    <a href="/settings">Settings</a>
+    <a href="/logout">Logout</a>
+    {% else %}
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+    {% endif %}
+
+</div>

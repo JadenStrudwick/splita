@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block main %}
+<div id="welcomeMessage">
+    <img src="static/full_logo.png" alt="Splita logo">
+    <h1>Welcome to Splita!</h1>
+    <p>Splita is a bill splitting and tracking webapp developed by Jaden Strudwick for CS139</p>
+    <p>To get started, register or login below!</p>
+</div>
+
+<div class="formContainer">
+    {% autoescape true %}
+    <h1>Login</h1>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form action="login" method="post">
+        <label for="email">Email</label>
+        <br>
+        <input required type="email" id="emailField" name="email">
+
+        <br>
+
+        <label for="password">Password</label>
+        <br>
+        <input required type="password" id="passwordField" name="password">
+
+        <br>
+
+        <input type="submit" value="Login">
+    </form>
+    {% endautoescape %}
+</div>
+{% endblock %}

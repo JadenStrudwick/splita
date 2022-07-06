@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--Meta Tags-->
+    <meta charset="utf-8">
+
+    <!--Style Sheets-->
+    <link href="static/css/light-theme.css" rel="stylesheet" id="theme-link">
+
+    <!--Scripts-->
+    <script src="static/js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="static/js/houseHold.js" type="text/javascript" charset="utf-8"></script>
+    <script src="static/js/bill.js" type="text/javascript" charset="utf-8"></script>
+
+    <!--Title-->
+    <title>{% block title %}{% endblock %} - Splita</title>
+
+    <!--Logo-->
+    <link rel="icon" type="image/png" href="static/logo.png">
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <script>
+        hex = "{{ hex }}"
+        if (hex == "") {
+            document.body.style.setProperty("--primary", "#" + "ffa6ff")
+        } else {
+            document.body.style.setProperty("--primary", "#" + hex)
+        }
+    </script>
+
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+</body>
+
+</html>

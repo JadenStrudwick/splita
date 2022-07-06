@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block main %}
+
+<div class="formContainer">
+    {% autoescape true %}
+    <h1>Change Password</h1>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form action="changePassword" method="post">
+        <label for="name">Old Password</label>
+        <input minlength="5" required type="password" id="oldPasswordField" name="oldPassword">
+
+        <label for="name">New Password</label>
+        <input minlength="5" required type="password" id="newPasswordField" name="newPassword">
+
+        <label for="name">Confirm new Password</label>
+        <input minlength="5" required type="password" id="confirmNewPasswordField" name="confirmNewPassword">
+
+        <input type="submit" value="Submit">
+    </form>
+    {% endautoescape %}
+</div>
+
+<div class="formContainer">
+    {% autoescape true %}
+    <h1>Change Theme Colour</h1>
+    <form action="changeColor" method="post">
+        <label for="color">Click below to select a new colour</label>
+        <input required type="color" id="colorField" name="color">
+
+        <input type="submit" value="Submit">
+    </form>
+    {% endautoescape %}
+</div>
+{% endblock %}
