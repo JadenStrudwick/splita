@@ -1,1 +1,7 @@
 vcwk
+__pycache__
+.env
+demo.mp4
+clean.sh
+run.sh
+setup.sh
